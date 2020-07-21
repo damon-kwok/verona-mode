@@ -1,4 +1,3 @@
-;; -*- lexical-binding: t -*-
 ;;; verona-mode.el --- A major mode for the Verona programming language
 ;;
 ;; Authors: Damon Kwok <damon-kwok@outlook.com>
@@ -26,8 +25,8 @@
 ;;
 ;;   M-x package-install verona-mode
 ;;
-;; Or, copy verona-mode.el to some location in your emacs load
-;; path. Then add "(require 'verona-mode)" to your emacs initialization
+;; Or, copy verona-mode.el to some location in your Emacs load
+;; path.  Then add "(require 'verona-mode)" to your Emacs initialization
 ;; (.emacs, init.el, or something).
 ;;
 ;; Example config:
@@ -109,7 +108,7 @@
     (define-key map "\C-j" 'newline-and-indent)
     ;; (define-key map (kbd "<C-return>") 'yafolding-toggle-element) ;
     map)
-  "Keymap for Verona major mode")
+  "Keymap for Verona major mode.")
 
 (defconst verona-keywords
   '("module" "type" "class"                        ;
@@ -245,7 +244,8 @@
 (defun verona-beginning-of-defun
   (&optional
     count)
-  "Go to line on which current function starts."
+  "Go to line on which current function start.
+Optional argument COUNT 1."
   (interactive)
   (let ((orig-level (odin-paren-level)))
     (while (and (not (odin-line-is-defun))
@@ -272,7 +272,7 @@
         (forward-char)))))
 
 (defun verona-project-root-p (PATH)
-  "Return `t' if directory `PATH' is the root of the Verona project."
+  "Return t if directory `PATH' is the root of the Verona project."
   (setq-local files '("v.mod" "make.bat" "Makefile" ;
                        "Dockerfile" ".editorconfig" ".gitignore"))
   (setq-local foundp nil)
@@ -287,7 +287,8 @@
 (defun verona-project-root
   (&optional
     PATH)
-  "Return the root of the Verona project."
+  "Return the root of the Verona project.
+Optional argument PATH project path."
   (let* ((bufdir (if buffer-file-name   ;
                    (file-name-directory buffer-file-name) default-directory))
           (curdir (if PATH (file-name-as-directory PATH) bufdir))
@@ -304,23 +305,24 @@
   (file-name-base (directory-file-name (verona-project-root))))
 
 (defun verona-project-file-exists-p (FILENAME)
-  "Return t if file `FILENAME' exists"
+  "Return t if file `FILENAME' exists."
   (file-exists-p (concat (verona-project-root) FILENAME)))
 
 (defun verona-run-command (COMMAND &optional PATH)
-  "Return `COMMAND' in the root of the Verona project."
+  "Return `COMMAND' in the root of the Verona project.
+Optional argument PATH project path."
   (setq default-directory (if PATH PATH (verona-project-root PATH)))
   (compile COMMAND))
 
 (defun verona-project-build ()
-  "Build project with v."
+  "Build project with veronac."
   (interactive)
   (if (verona-project-file-exists-p "Makefile")
     (verona-run-command "make")
     (verona-run-command "veronac .")))
 
 (defun verona-project-open ()
-  "open `Makefile' file."
+  "Open `Makefile' file."
   (interactive)
   (if (verona-project-file-exists-p "Makefile")
     (find-file (concat (verona-project-root) "Makefile"))))
@@ -353,11 +355,10 @@
        ["Home" (verona-run-command "xdg-open https://github.com/microsoft/verona") t]
        ["Contribute" ;;
          (verona-run-command
-           "xdg-open https://github.com/microsoft/verona/blob/master/CONTRIBUTING.md") t]
-)))
+           "xdg-open https://github.com/microsoft/verona/blob/master/CONTRIBUTING.md") t])))
 
 (defun verona-banner-default ()
-  "v banner."
+  "Verona banner."
   "
   __   _____ _ __ ___  _ __   __ _
   \\ \\ / / _ \\ '__/ _ \\| '_ \\ / _` |
@@ -384,7 +385,8 @@
 (defun verona-folding-hide-element
   (&optional
     RETRY)
-  "Hide current element."
+  "Hide current element.
+Optional argument RETRY retry mode."
   (interactive)
   (let* ((region (yafolding-get-element-region))
           (beg (car region))
@@ -396,6 +398,7 @@
       (yafolding-hide-region beg end))))
 
 (defun verona-build-tags ()
+  "Build tags for current project."
   (interactive)
   (let ((tags-buffer (get-buffer "TAGS"))
          (tags-buffer2 (get-buffer (format "TAGS<%s>" (verona-project-name)))))
@@ -416,7 +419,8 @@
 (defun verona-load-tags
   (&optional
     BUILD)
-  "Visit tags table."
+  "Visit tags table.
+Optional argument BUILD If the tags file does not exist, execute the build."
   (interactive)
   (let* ((tags-file (concat (verona-project-root) "TAGS")))
     (if (file-exists-p tags-file)
@@ -424,6 +428,7 @@
       (if BUILD (verona-build-tags)))))
 
 (defun verona-after-save-hook ()
+  "After save hook."
   (shell-command (concat  "v -w fmt " (buffer-file-name)))
   (revert-buffer
     :ignore-auto
@@ -511,3 +516,7 @@
 ;;
 (provide 'verona-mode)
 ;; verona-mode.el ends here
+
+(provide 'verona-mode)
+
+;;; verona-mode.el ends here
