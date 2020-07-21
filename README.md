@@ -42,8 +42,8 @@ it's too simple to need any).
 
 ```elisp
 (require 'verona-mode)
-(define-key ponylang-mode-map (kbd "M-z") verona-menu)
-(define-key ponylang-mode-map (kbd "<f6>")  verona-menu)
+(define-key verona-mode-map (kbd "M-z") verona-menu)
+(define-key verona-mode-map (kbd "<f6>")  verona-menu)
 ```
 
 ### Using [use-package](https://github.com/jwiegley/use-package) and [straight.el](https://github.com/raxod502/straight.el)
