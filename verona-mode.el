@@ -273,7 +273,7 @@ Optional argument COUNT."
 
 (defun verona-project-root-p (PATH)
   "Return t if directory `PATH' is the root of the Verona project."
-  (setq-local files '("v.mod" "make.bat" "Makefile" ;
+  (setq-local files '("CMakeLists.txt" "make.bat" "Makefile" ;
                        "Dockerfile" ".editorconfig" ".gitignore"))
   (setq-local foundp nil)
   (while (and files
@@ -378,7 +378,7 @@ Optional argument PATH: project path."
   ("q" nil "Quit"))
 
 (defun verona-menu ()
-  "Open v hydra menu."
+  "Open verona hydra menu."
   (interactive)
   (verona-hydra-menu/body))
 
@@ -404,7 +404,7 @@ Optional argument RETRY."
          (tags-buffer2 (get-buffer (format "TAGS<%s>" (verona-project-name)))))
     (if tags-buffer (kill-buffer tags-buffer))
     (if tags-buffer2 (kill-buffer tags-buffer2)))
-  (let* ((verona-path (string-trim (shell-command-to-string "which v")))
+  (let* ((verona-path (string-trim (shell-command-to-string "which veronac")))
           (verona-executable (string-trim (shell-command-to-string (concat "readlink -f "
                                                                      verona-path))))
           (packages-path (expand-file-name (concat (file-name-directory verona-executable) "vlib")))
@@ -429,7 +429,7 @@ Optional argument BUILD If the tags file does not exist, execute the build."
 
 (defun verona-after-save-hook ()
   "After save hook."
-  (shell-command (concat  "v -w fmt " (buffer-file-name)))
+  (shell-command (concat  "veronac fmt " (buffer-file-name)))
   (revert-buffer
     :ignore-auto
     :noconfirm)
@@ -456,6 +456,7 @@ Optional argument BUILD If the tags file does not exist, execute the build."
   (setq-local beginning-of-defun-function 'verona-beginning-of-defun)
   (setq-local end-of-defun-function 'verona-end-of-defun)
   (setq-local indent-line-function 'js-indent-line)
+  (setq-local js-indent-level 2)
 
   ;; (setq-local font-lock-defaults        ;
   ;; '(verona-font-lock-keywords ;
