@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/github/license/damon-kwok/verona-mode)](https://github.com/damon-kwok/verona-mode/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/damon-kwok/verona-mode)](https://github.com/damon-kwok/verona-mode/blob/master/COPYING)
 [![MELPA](http://melpa.org/packages/verona-mode-badge.svg)](http://melpa.org/#/verona-mode)
 [![MELPA Stable](http://stable.melpa.org/packages/verona-mode-badge.svg)](http://stable.melpa.org/#/verona-mode)
 
@@ -22,7 +22,7 @@ An Emacs major mode for the [Verona](https://github.com/microsoft/verona/) progr
 - [x] Workspaces
 - [x] `Verona` mode menu
 - [ ] Auto format on save
-- [ ] Build command integration
+- [x] Build command integration
 - [ ] Go to definition (using `ctags`)
 - [ ] `Keywords` and `Methods name` autocomplete (using `company-mode`)
 
