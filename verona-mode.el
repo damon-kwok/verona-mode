@@ -243,9 +243,9 @@
 
 (defun verona-beginning-of-defun
   (&optional
-    count)
+    COUNT)
   "Go to line on which current function start.
-Optional argument COUNT 1."
+Optional argument COUNT."
   (interactive)
   (let ((orig-level (odin-paren-level)))
     (while (and (not (odin-line-is-defun))
@@ -288,7 +288,7 @@ Optional argument COUNT 1."
   (&optional
     PATH)
   "Return the root of the Verona project.
-Optional argument PATH project path."
+Optional argument PATH: project path."
   (let* ((bufdir (if buffer-file-name   ;
                    (file-name-directory buffer-file-name) default-directory))
           (curdir (if PATH (file-name-as-directory PATH) bufdir))
@@ -310,7 +310,7 @@ Optional argument PATH project path."
 
 (defun verona-run-command (COMMAND &optional PATH)
   "Return `COMMAND' in the root of the Verona project.
-Optional argument PATH project path."
+Optional argument PATH: project path."
   (setq default-directory (if PATH PATH (verona-project-root PATH)))
   (compile COMMAND))
 
@@ -386,7 +386,7 @@ Optional argument PATH project path."
   (&optional
     RETRY)
   "Hide current element.
-Optional argument RETRY retry mode."
+Optional argument RETRY."
   (interactive)
   (let* ((region (yafolding-get-element-region))
           (beg (car region))
@@ -514,9 +514,6 @@ Optional argument BUILD If the tags file does not exist, execute the build."
 (add-to-list 'auto-mode-alist '("\\.verona\\'" . verona-mode))
 
 ;;
-(provide 'verona-mode)
-;; verona-mode.el ends here
-
 (provide 'verona-mode)
 
 ;;; verona-mode.el ends here
