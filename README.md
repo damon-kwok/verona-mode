@@ -12,7 +12,7 @@ An Emacs major mode for the [Verona](https://github.com/microsoft/verona/) progr
 
 ## Features
 - [X] Syntax highlighting (font-lock)
-- [X] Indentation
+- [ ] Indentation
 - [x] `imenu`
 - [x] TODO highlighting
 - [x] Rainbow delimiters
