@@ -242,36 +242,6 @@
      ("\\([a-z_]+[a-z0-9_']*\\)+" 1 'font-lock-variable-name-face))
   "An alist mapping regexes to font-lock faces.")
 
-(defun verona-beginning-of-defun
-  (&optional
-    COUNT)
-  "Go to line on which current function start.
-Optional argument COUNT."
-  (interactive)
-  (let ((orig-level (odin-paren-level)))
-    (while (and (not (odin-line-is-defun))
-             (not (bobp))
-             (> orig-level 0))
-      (setq orig-level (odin-paren-level))
-      (while (>= (odin-paren-level) orig-level)
-        (skip-chars-backward "^{")
-        (backward-char))))
-  (if (odin-line-is-defun)
-    (beginning-of-line)))
-
-(defun verona-end-of-defun ()
-  "Go to line on which current function ends."
-  (interactive)
-  (let ((orig-level (odin-paren-level)))
-    (when (> orig-level 0)
-      (odin-beginning-of-defun)
-      (end-of-line)
-      (setq orig-level (odin-paren-level))
-      (skip-chars-forward "^}")
-      (while (>= (odin-paren-level) orig-level)
-        (skip-chars-forward "^}")
-        (forward-char)))))
-
 (defun verona-project-root-p (PATH)
   "Return t if directory `PATH' is the root of the Verona project."
   (setq-local files '("CMakeLists.txt" "make.bat" "Makefile" ;
@@ -460,8 +430,6 @@ Optional argument BUILD If the tags file does not exist, execute the build."
   (setq-local comment-start "*/")
   (setq-local comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
   (setq-local electric-indent-chars (append "{}():;," electric-indent-chars))
-  (setq-local beginning-of-defun-function 'verona-beginning-of-defun)
-  (setq-local end-of-defun-function 'verona-end-of-defun)
   (setq-local indent-line-function 'js-indent-line)
   (setq-local js-indent-level 2)
 
@@ -504,7 +472,7 @@ Optional argument BUILD If the tags file does not exist, execute the build."
   ;;
   (rainbow-delimiters-mode t)
   ;;
-  (defalias 'yafolding-hide-element 'verona-folding-hide-element)
+  ;; (defalias 'yafolding-hide-element 'verona-folding-hide-element)
   (yafolding-mode t)
   ;;
   (setq-local imenu-generic-expression ;;
