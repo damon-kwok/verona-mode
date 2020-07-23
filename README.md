@@ -1,7 +1,7 @@
-[![GitHub license](https://img.shields.io/github/license/damon-kwok/verona-mode)](https://github.com/damon-kwok/verona-mode/blob/master/COPYING)
-[![MELPA](http://melpa.org/packages/verona-mode-badge.svg)](http://melpa.org/#/verona-mode)
-[![MELPA Stable](http://stable.melpa.org/packages/verona-mode-badge.svg)](http://stable.melpa.org/#/verona-mode)
+[![GitHub license](https://img.shields.io/github/license/damon-kwok/verona-mode?logo=gnu&.svg)](https://github.com/damon-kwok/verona-mode/blob/master/COPYING)
 [![Sponsor](https://img.shields.io/badge/Support%20Me-%F0%9F%92%97-ff69b4.svg)](https://www.patreon.com/DamonKwok)
+<!-- [![MELPA](http://melpa.org/packages/verona-mode-badge.svg)](http://melpa.org/#/verona-mode) -->
+<!-- [![MELPA Stable](http://stable.melpa.org/packages/verona-mode-badge.svg)](http://stable.melpa.org/#/verona-mode) -->
 
 # Verona Mode
 
@@ -12,24 +12,25 @@ An Emacs major mode for the [Verona](https://github.com/microsoft/verona/) progr
 ![screenshot](https://github.com/damon-kwok/verona-mode/blob/master/screenshot.png)
 
 ## Features
+
 - [X] Syntax highlighting (font-lock)
 - [ ] Indentation
-- [x] `imenu`
 - [x] TODO highlighting
 - [x] Rainbow delimiters
 - [x] Whitespace character dsiplay
 - [x] Fill column indicator
-- [x] Code folding
-- [x] Workspaces
-- [x] `Verona` mode menu
+- [x] `V` mode menu
+- [x] Workspace support
 - [ ] Auto format on save
-- [x] Build command integration
-- [ ] Go to definition (using `ctags`)
-- [ ] `Keywords` and `Methods name` autocomplete (using `company-mode`)
+- [x] Code folding
+- [x] Compilation integration
+- [x] Code navigation (using `imenu`)
+- [x] Go to definition (using `ctags`)
+- [x] Code completion (using `company-mode`)
 
 ## Installation
 
-### Using MELPA
+### ~~Using MELPA~~ ([COMING SOON](https://github.com/melpa/melpa/pull/7034))
 This package can be obtain from
 [MELPA](http://melpa.org/#/verona-mode) or
 [MELPA Stable](http://stable.melpa.org/#/verona-mode). The `master`
@@ -60,5 +61,5 @@ it's too simple to need any).
   :bind-keymap
   ("M-z" . verona-menu)
   ("<f6>" . verona-menu)
-  :mode ("\\.v\\'" . verona-mode))
+  :mode ("\\.verona\\'" . verona-mode))
 ```

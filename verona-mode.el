@@ -407,13 +407,19 @@ Optional argument RETRY."
   (let* ((verona-path (string-trim (shell-command-to-string "which veronac")))
           (verona-executable (string-trim (shell-command-to-string (concat "readlink -f "
                                                                      verona-path))))
-          (packages-path (expand-file-name (concat (file-name-directory verona-executable) "vlib")))
+          (packages-path (concat (file-name-directory verona-executable) "../stdlib"))
           (ctags-params                 ;
-            (concat  "ctags " "-e -R . " packages-path)))
+            (concat  "ctags --languages=-v --langdef=v --langmap=v:.v "
+              "--regex-v=/[ \\t]*builtin[ \\t]+([a-zA-Z0-9_]+)/\\1/m,method/ "
+              "--regex-v=/[ \\t]*create[ \\t]+([a-zA-Z0-9_]+)/\\1/n,constructor/ "
+              "--regex-v=/[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
+              "-e -R . " packages-path)))
     (if (file-exists-p packages-path)
       (progn
         (setq default-directory (verona-project-root))
-        (shell-command ctags-params)
+        (let (result (shell-command-to-string ctags-params))
+          (if (not (eq "" result))
+            (message "ctags:%s" result)))
         (verona-load-tags)))))
 
 (defun verona-load-tags
