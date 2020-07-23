@@ -365,7 +365,7 @@ Optional argument RETRY."
     (if (and (eq RETRY nil)
           (= beg end))
       (progn (yafolding-go-parent-element)
-        (yafolding-hide-element 1))
+        (verona-folding-hide-element t))
       (yafolding-hide-region beg end))))
 
 (defun verona-build-tags ()
@@ -438,7 +438,7 @@ Optional argument BUILD If the tags file does not exist, execute the build."
   ;; nil nil nil nil         ;
   ;; (font-lock-syntactic-face-function . verona-mode-syntactic-face-function)))
   (setq-local font-lock-defaults '(verona-font-lock-keywords))
-  (font-lock-fontify-buffer)
+  (font-lock-ensure)
 
   ;; (setq-local syntax-propertize-function verona-syntax-propertize-function)
   (setq-local indent-tabs-mode nil)
