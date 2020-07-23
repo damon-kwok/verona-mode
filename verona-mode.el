@@ -412,7 +412,7 @@ Optional argument RETRY."
             (concat  "ctags --languages=-v --langdef=v --langmap=v:.v "
               "--regex-v=/[ \\t]*builtin[ \\t]+([a-zA-Z0-9_]+)/\\1/m,method/ "
               "--regex-v=/[ \\t]*create[ \\t]+([a-zA-Z0-9_]+)/\\1/n,constructor/ "
-              "--regex-v=/[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
+              "--regex-v=/^[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
               "-e -R . " packages-path)))
     (if (file-exists-p packages-path)
       (progn
@@ -508,10 +508,10 @@ Optional argument BUILD If the tags file does not exist, execute the build."
   ;;
   (setq-local imenu-generic-expression ;;
     '(("TODO" ".*TODO:[ \t]*\\(.*\\)$" 1)
-       ("method" "^[ \t]*builtin[ \t]+\\([a-z0-9_]+\\)[ \t]*" 1)
-       ("constructor" "^[ \t]+\\(create\\)[ \t]*" 1)
+       ("method" "[ \t]*builtin[ \t]+\\([a-z0-9_]+\\)[ \t]*" 1)
+       ("constructor" "[ \t]+\\(create\\)[ \t]*" 1)
        ("class" "^[ \t]*class[ \t]+\\([a-zA-Z0-9_]+\\)" 1)
-       ("module" "^[ \t]*module[ \t]+\\([a-zA-Z0-9_]+\\)" 1)))
+       ("module" "[ \t]*module[ \t]+\\([a-zA-Z0-9_]+\\)" 1)))
   (imenu-add-to-menubar "Index")
   ;;
   (add-hook 'after-save-hook 'verona-after-save-hook nil t)
