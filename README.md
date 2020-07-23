@@ -46,6 +46,8 @@ it's too simple to need any).
 (require 'verona-mode)
 (define-key verona-mode-map (kbd "M-z") verona-menu)
 (define-key verona-mode-map (kbd "<f6>")  verona-menu)
+
+(with-eval-after-load 'company (company-ctags-auto-setup))
 ```
 
 ### Using [use-package](https://github.com/jwiegley/use-package) and [straight.el](https://github.com/raxod502/straight.el)
@@ -62,4 +64,6 @@ it's too simple to need any).
   ("M-z" . verona-menu)
   ("<f6>" . verona-menu)
   :mode ("\\.verona\\'" . verona-mode))
+
+(with-eval-after-load 'company (company-ctags-auto-setup))
 ```
