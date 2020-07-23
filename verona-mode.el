@@ -4,7 +4,7 @@
 ;; Version: 0.0.1
 ;; URL: https://github.com/damon-kwok/verona-mode
 ;; Keywords: languages programming
-;; Package-Requires: ((dash "2.17.0") (hydra "0.15.0") (hl-todo "3.1.2") (yafolding "0.4.1") (yasnippet "0.14.0") (rainbow-delimiters "2.1.4") (fill-column-indicator "1.90"))
+;; Package-Requires: ((emacs "25.1") (dash "2.17.0") (hydra "0.15.0") (hl-todo "3.1.2") (yafolding "0.4.1") (yasnippet "0.14.0") (rainbow-delimiters "2.1.4") (fill-column-indicator "1.90"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -57,7 +57,7 @@
 
 ;;; Code:
 
-(require 'cl)
+(require 'cl-lib)
 (require 'js)
 (require 'dash)
 (require 'xref)
@@ -72,6 +72,7 @@
 (require 'fill-column-indicator)
 
 (defvar verona-mode-hook nil)
+
 (defcustom verona-indent-trigger-commands ;
   '(indent-for-tab-command yas-expand yas/expand)
   "Commands that might trigger a `verona-indent-line' call."
