@@ -349,7 +349,7 @@ Optional argument PATH: project path."
   ("q" nil "Quit"))
 
 (defun verona-menu ()
-  "Open verona hydra menu."
+  "Open Verona hydra menu."
   (interactive)
   (verona-hydra-menu/body))
 
@@ -380,10 +380,10 @@ Optional argument RETRY."
                                                                      verona-path))))
           (packages-path (concat (file-name-directory verona-executable) "../stdlib"))
           (ctags-params                 ;
-            (concat  "ctags --languages=-v --langdef=v --langmap=v:.v "
-              "--regex-v=/[ \\t]*builtin[ \\t]+([a-zA-Z0-9_]+)/\\1/m,method/ "
-              "--regex-v=/[ \\t]*create[ \\t]+([a-zA-Z0-9_]+)/\\1/n,constructor/ "
-              "--regex-v=/^[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
+            (concat  "ctags --languages=-verona --langdef=verona --langmap=verona:.verona "
+              "--regex-verona=/[ \\t]*builtin[ \\t]+([a-zA-Z0-9_]+)/\\1/m,method/ "
+              "--regex-verona=/[ \\t]*create[ \\t]+([a-zA-Z0-9_]+)/\\1/n,constructor/ "
+              "--regex-verona=/^[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
               "-e -R . " packages-path)))
     (if (file-exists-p packages-path)
       (progn
