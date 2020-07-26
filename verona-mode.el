@@ -438,14 +438,6 @@ Optional argument BUILD If the tags file does not exist, execute the build."
   (setq-local tab-width 2)
   (setq-local buffer-file-coding-system 'utf-8-unix)
   ;;
-  (hl-todo-mode)
-  (setq-local hl-todo-keyword-faces ;;
-    '(("TODO" . "green")
-       ("FIXME" . "yellow")
-       ("DEBUG" . "DarkCyan")
-       ("GOTCHA" . "red")
-       ("STUB" . "DarkGreen")))
-  (whitespace-mode)
   (setq-local whitespace-style ;;
     '(face spaces tabs newline space-mark tab-mark newline-mark trailing))
   ;; Make whitespace-mode and whitespace-newline-mode
