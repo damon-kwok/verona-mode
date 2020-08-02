@@ -377,13 +377,14 @@ Optional argument BUILD If the tags file does not exist, execute the build."
 
 (defun verona-after-save-hook ()
   "After save hook."
-  (shell-command (concat  "veronac fmt " (buffer-file-name)))
-  (revert-buffer
-    :ignore-auto
-    :noconfirm)
-  (if (not (executable-find "ctags"))
-    (message "Could not locate executable '%s'" "ctags")
-    (verona-build-tags)))
+  (when (eq major-mode 'verona-mode)
+    (shell-command (concat  "veronac fmt " (buffer-file-name)))
+    (revert-buffer
+      :ignore-auto
+      :noconfirm)
+    (if (not (executable-find "ctags"))
+      (message "Could not locate executable '%s'" "ctags")
+      (verona-build-tags))))
 
 ;;;###autoload
 (define-derived-mode verona-mode prog-mode "Verona"
