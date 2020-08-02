@@ -4,7 +4,7 @@
 ;; Version: 0.0.1
 ;; URL: https://github.com/damon-kwok/verona-mode
 ;; Keywords: languages programming
-;; Package-Requires: ((emacs "25.1") (dash "2.17.0") (hydra "0.15.0") (yasnippet "0.14.0"))
+;; Package-Requires: ((emacs "25.1") (dash "2.17.0") (hydra "0.15.0"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -65,15 +65,8 @@
 (require 'hydra)
 (require 'imenu)
 (require 'easymenu)
-(require 'yasnippet)
 
 (defvar verona-mode-hook nil)
-
-(defcustom verona-indent-trigger-commands ;
-  '(indent-for-tab-command yas-expand yas/expand)
-  "Commands that might trigger a `verona-indent-line' call."
-  :type '(repeat symbol)
-  :group 'verona)
 
 (defconst verona-mode-syntax-table
   (let ((table (make-syntax-table)))
@@ -103,7 +96,6 @@
 (defvar verona-mode-map
   (let ((map (make-keymap)))
     (define-key map "\C-j" 'newline-and-indent)
-    ;; (define-key map (kbd "<C-return>") 'yafolding-toggle-element) ;
     map)
   "Keymap for Verona major mode.")
 
@@ -349,21 +341,6 @@ Optional argument PATH: project path."
   (interactive)
   (verona-hydra-menu/body))
 
-(defun verona-folding-hide-element
-  (&optional
-    retry)
-  "Hide current element.
-Optional argument RETRY."
-  (interactive)
-  (let* ((region (yafolding-get-element-region))
-          (beg (car region))
-          (end (cadr region)))
-    (if (and (not retry)
-          (= beg end))
-      (progn (yafolding-go-parent-element)
-        (verona-folding-hide-element t))
-      (yafolding-hide-region beg end))))
-
 (defun verona-build-tags ()
   "Build tags for current project."
   (interactive)
@@ -408,11 +385,8 @@ Optional argument BUILD If the tags file does not exist, execute the build."
     (message "Could not locate executable '%s'" "ctags")
     (verona-build-tags)))
 
-(defalias 'verona-parent-mode
-  (if (fboundp 'prog-mode) 'prog-mode 'fundamental-mode))
-
 ;;;###autoload
-(define-derived-mode verona-mode verona-parent-mode "Verona"
+(define-derived-mode verona-mode prog-mode "Verona"
   "Major mode for editing Verona files."
   :syntax-table verona-mode-syntax-table
   (setq bidi-paragraph-direction 'left-to-right)
