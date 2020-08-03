@@ -15,18 +15,18 @@ An Emacs major mode for the [Verona](https://github.com/microsoft/verona/) progr
 
 - [X] Syntax highlighting (font-lock)
 - [ ] Indentation
-- [x] TODO highlighting
-- [x] Rainbow delimiters
-- [x] Whitespace character dsiplay
-- [x] Fill column indicator
-- [x] `V` mode menu
 - [x] Workspace support
 - [ ] Auto format on save
-- [x] Code folding
 - [x] Compilation integration
 - [x] Code navigation (using `imenu`)
 - [x] Go to definition (using `ctags`)
 - [x] Code completion (using `company-mode`)
+<!-- - [x] Code folding -->
+<!-- - [x] TODO highlighting -->
+<!-- - [x] Rainbow delimiters -->
+<!-- - [x] Whitespace character dsiplay -->
+<!-- - [x] Fill column indicator -->
+<!-- - [x] `V` mode menu -->
 
 ## Installation
 
