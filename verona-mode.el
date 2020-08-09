@@ -286,12 +286,10 @@ Optional argument PATH: project path."
   (let* ((bin1 (concat (verona-project-root) "bin/" (verona-project-name)))
           (bin2 (concat (verona-project-root) "/" (verona-project-name)))
           (bin3 (concat (verona-buffer-dirname) "/" (verona-project-name))))
-    (if (file-exists-p bin1)
-      (verona-run-command bin1)
-      (if (file-exists-p bin2)
-        (verona-run-command bin2)
-        (if (file-exists-p bin3)
-          (verona-run-command bin3))))))
+    (cond 
+      ((file-exists-p bin1) (v-run-command bin1))
+      ((file-exists-p bin2) (v-run-command bin2))
+      ((file-exists-p bin2) (v-run-command bin2)))))
 
 (easy-menu-define verona-mode-menu verona-mode-map ;
   "Menu for Verona mode."                          ;
