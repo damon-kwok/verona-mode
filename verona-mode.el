@@ -347,11 +347,10 @@ Optional argument PATH: project path."
               "--regex-verona=/[ \\t]*create[ \\t]+([a-zA-Z0-9_]+)/\\1/n,constructor/ "
               "--regex-verona=/^[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
               "-e -R . " packages-path)))
-    (if (file-exists-p packages-path)
-      (progn
-        (setq default-directory (verona-project-root))
-        (message "ctags:%s" (shell-command-to-string ctags-params))
-        (verona-load-tags)))))
+    (when (file-exists-p packages-path)
+      (setq default-directory (verona-project-root))
+      (message "ctags:%s" (shell-command-to-string ctags-params))
+      (verona-load-tags))))
 
 (defun verona-load-tags
   (&optional
@@ -379,7 +378,7 @@ Optional argument BUILD If the tags file does not exist, execute the build."
 (define-derived-mode verona-mode prog-mode "Verona"
   "Major mode for editing Verona files."
   :syntax-table verona-mode-syntax-table
-  (setq bidi-paragraph-direction 'left-to-right)
+  ;; (setq-local bidi-paragraph-direction 'left-to-right)
   (setq-local require-final-newline mode-require-final-newline)
   (setq-local parse-sexp-ignore-comments t)
   (setq-local comment-start "/*")
