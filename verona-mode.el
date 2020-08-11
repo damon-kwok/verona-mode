@@ -84,8 +84,7 @@
 
 (defvar verona-mode-map
   (let ((map (make-keymap)))
-    (define-key map "\C-j" 'newline-and-indent)
-    map)
+    (define-key map "\C-j" 'newline-and-indent) map)
   "Keymap for Verona major mode.")
 
 (defconst verona-keywords
@@ -127,26 +126,31 @@
 (defconst verona-keywords-regexp (regexp-opt verona-keywords 'words)
   "Regular expression for matching keywords.")
 
-(defconst verona-declaration-keywords-regexp ;
+(defconst verona-declaration-keywords-regexp
+                                        ;
   (regexp-opt verona-declaration-keywords 'words)
   "Regular expression for matching declaration keywords.")
 
-(defconst verona-preprocessor-keywords-regexp ;
+(defconst verona-preprocessor-keywords-regexp
+                                        ;
   (regexp-opt verona-preprocessor-keywords 'words)
   "Regular expression for matching preprocessor keywords.")
 
-(defconst verona-careful-keywords-regexp ;
+(defconst verona-careful-keywords-regexp
+                                        ;
   (regexp-opt verona-careful-keywords 'words)
   "Regular expression for matching careful keywords.")
 
-(defconst verona-builtin-keywords-regexp (regexp-opt verona-builtin-keywords 'words)
+(defconst verona-builtin-keywords-regexp
+  (regexp-opt verona-builtin-keywords 'words)
   "Regular expression for matching builtin type.")
 
 (defconst verona-constant-regexp        ;
   (regexp-opt verona-constants 'words)
   "Regular expression for matching constants.")
 
-(defconst verona-operator-functions-regexp ;
+(defconst verona-operator-functions-regexp
+                                        ;
   (regexp-opt verona-operator-functions 'words)
   "Regular expression for matching operator functions.")
 
@@ -175,7 +179,8 @@
      ("\\($?[?^!&]+\\)" 1 'font-lock-warning-face)
 
      ;; delimiter: = : separate
-     ("[^+-/*//%~^!=<>]\\([=:]\\)[^+-/*//%~^!=<>]" 1 'font-lock-comment-delimiter-face)
+     ("[^+-/*//%~^!=<>]\\([=:]\\)[^+-/*//%~^!=<>]" 1
+       'font-lock-comment-delimiter-face)
 
      ;; delimiter: brackets
      ("\\(\\[\\|\\]\\|[(){}]\\)" 1 'font-lock-comment-delimiter-face)
@@ -190,7 +195,8 @@
      ("\\([A-Z][A-Za-z0-9_]*\\)" 1 'font-lock-type-face)
 
      ;; method
-     ("\\(?:builtin\s+\\)*\\([a-z_]$?[a-z0-9_]?+\\)[ \t]*\\(.*\\)(" 1 'font-lock-function-name-face)
+     ("\\(?:builtin\s+\\)*\\([a-z_]$?[a-z0-9_]?+\\)[ \t]*\\(.*\\)(" 1
+       'font-lock-function-name-face)
 
      ;; constants references
      (,verona-constant-regexp . font-lock-constant-face)
@@ -199,7 +205,8 @@
      ("@[A-Za-z_]*[A-Z-a-z0-9_]*" . 'font-lock-builtin-face)
 
      ;; parameter
-     ("\\(?:(\\|,\\)\\([a-z_][a-z0-9_']*\\)\\([^ \t\r\n,:)]*\\)" 1 'font-lock-variable-name-face)
+     ("\\(?:(\\|,\\)\\([a-z_][a-z0-9_']*\\)\\([^ \t\r\n,:)]*\\)" 1
+       'font-lock-variable-name-face)
      ("\\(?:(\\|,\\)[ \t]+\\([a-z_][a-z0-9_']*\\)\\([^ \t\r\n,:)]*\\)" 1
        'font-lock-variable-name-face)
 
@@ -213,7 +220,8 @@
      ("\\('[\\].'\\)" 1 'font-lock-constant-face)
 
      ;; numeric literals
-     ("[ \t/+-/*//=><([,;]\\([0-9]+[0-9a-zA-Z_]*\\)+" 1 'font-lock-constant-face)
+     ("[ \t/+-/*//=><([,;]\\([0-9]+[0-9a-zA-Z_]*\\)+" 1
+       'font-lock-constant-face)
 
      ;; variable references
      ("\\([a-z_]+[a-z0-9_']*\\)+" 1 'font-lock-variable-name-face))
@@ -277,7 +285,8 @@ Optional argument PATH: project path."
 
 (defun verona-buffer-dirname ()
   "Return current buffer directory file name."
-  (directory-file-name (if buffer-file-name (file-name-directory buffer-file-name)
+  (directory-file-name (if buffer-file-name (file-name-directory
+                                              buffer-file-name)
                          default-directory)))
 
 (defun verona-project-run ()
@@ -286,10 +295,12 @@ Optional argument PATH: project path."
   (let* ((bin1 (concat (verona-project-root) "bin/" (verona-project-name)))
           (bin2 (concat (verona-project-root) "/" (verona-project-name)))
           (bin3 (concat (verona-buffer-dirname) "/" (verona-project-name))))
-    (cond
-      ((file-exists-p bin1) (verona-run-command bin1))
-      ((file-exists-p bin2) (verona-run-command bin2))
-      ((file-exists-p bin2) (verona-run-command bin3)))))
+    (cond ((file-exists-p bin1)
+            (verona-run-command bin1))
+      ((file-exists-p bin2)
+        (verona-run-command bin2))
+      ((file-exists-p bin2)
+        (verona-run-command bin3)))))
 
 (easy-menu-define verona-mode-menu verona-mode-map ;
   "Menu for Verona mode."                          ;
@@ -298,7 +309,8 @@ Optional argument PATH: project path."
      ["Run" verona-project-run t]                  ;
      "---"                                         ;
      ("Community"                                  ;
-       ["Home" (verona-run-command "xdg-open https://github.com/microsoft/verona") t]
+       ["Home" (verona-run-command
+                 "xdg-open https://github.com/microsoft/verona") t]
        ["Contribute" ;;
          (verona-run-command
            "xdg-open https://github.com/microsoft/verona/blob/master/CONTRIBUTING.md") t])))
@@ -336,11 +348,14 @@ Optional argument PATH: project path."
     (if tags-buffer (kill-buffer tags-buffer))
     (if tags-buffer2 (kill-buffer tags-buffer2)))
   (let* ((verona-path (string-trim (shell-command-to-string "which veronac")))
-          (verona-executable (string-trim (shell-command-to-string (concat "readlink -f "
+          (verona-executable (string-trim (shell-command-to-string (concat
+                                                                     "readlink -f "
                                                                      verona-path))))
-          (packages-path (concat (file-name-directory verona-executable) "../stdlib"))
+          (packages-path (concat (file-name-directory verona-executable)
+                           "../stdlib"))
           (ctags-params                 ;
-            (concat  "ctags --languages=-verona --langdef=verona --langmap=verona:.verona "
+            (concat
+              "ctags --languages=-verona --langdef=verona --langmap=verona:.verona "
               "--regex-verona=/[ \\t]*builtin[ \\t]+([a-zA-Z0-9_]+)/\\1/m,method/ "
               "--regex-verona=/[ \\t]*create[ \\t]+([a-zA-Z0-9_]+)/\\1/n,constructor/ "
               "--regex-verona=/^[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
@@ -373,7 +388,8 @@ Optional argument BUILD If the tags file does not exist, execute the build."
       (verona-build-tags))))
 
 ;;;###autoload
-(define-derived-mode verona-mode prog-mode "Verona"
+(define-derived-mode verona-mode prog-mode
+  "Verona"
   "Major mode for editing Verona files."
   :syntax-table verona-mode-syntax-table
   ;; (setq-local bidi-paragraph-direction 'left-to-right)
@@ -382,21 +398,23 @@ Optional argument BUILD If the tags file does not exist, execute the build."
   (setq-local comment-start "/*")
   (setq-local comment-end "*/")
   (setq-local comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
+  ;;
+  (setq-local indent-tabs-mode nil)
+  (setq-local tab-width 2)
+  (setq-local buffer-file-coding-system 'utf-8-unix)
+  ;;
   (setq-local electric-indent-chars (append "{}():;," electric-indent-chars))
   (setq-local indent-line-function #'js-indent-line)
-  (setq-local js-indent-level 2)
-
+  (setq-local js-indent-level tab-width)
+  ;;
   ;; (setq-local font-lock-defaults        ;
   ;; '(verona-font-lock-keywords ;
   ;; nil nil nil nil         ;
   ;; (font-lock-syntactic-face-function . verona-mode-syntactic-face-function)))
   (setq-local font-lock-defaults '(verona-font-lock-keywords))
   (font-lock-ensure)
-
+  ;;
   ;; (setq-local syntax-propertize-function verona-syntax-propertize-function)
-  (setq-local indent-tabs-mode nil)
-  (setq-local tab-width 2)
-  (setq-local buffer-file-coding-system 'utf-8-unix)
   ;;
   (setq-local imenu-generic-expression ;;
     '(("TODO" ".*TODO:[ \t]*\\(.*\\)$" 1)
