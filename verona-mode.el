@@ -267,8 +267,10 @@ Optional argument PATH: project path."
 (defun verona-run-command (command &optional path)
   "Return `COMMAND' in the root of the Verona project.
 Optional argument PATH: project path."
-  (setq default-directory (if path path (verona-project-root path)))
-  (compile command))
+  (let ((oldir default-directory))
+    (setq default-directory (if path path (verona-project-root path)))
+    (compile command)
+    (setq default-directory oldir)))
 
 (defun verona-project-build ()
   "Build project with veronac."
@@ -361,9 +363,11 @@ Optional argument PATH: project path."
               "--regex-verona=/^[ \\t]*class[ \\t]+([a-zA-Z0-9_]+)/\\1/c,class/ " ;
               "-e -R . " packages-path)))
     (when (file-exists-p packages-path)
-      (setq default-directory (verona-project-root))
-      (message "ctags:%s" (shell-command-to-string ctags-params))
-      (verona-load-tags))))
+      (let ((oldir default-directory))
+        (setq default-directory (verona-project-root))
+        (message "ctags:%s" (shell-command-to-string ctags-params))
+        (verona-load-tags)
+        (setq default-directory oldir)))))
 
 (defun verona-load-tags
   (&optional
