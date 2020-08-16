@@ -1,6 +1,6 @@
 [![GitHub license](https://img.shields.io/github/license/damon-kwok/verona-mode?logo=gnu&.svg)](https://github.com/damon-kwok/verona-mode/blob/master/COPYING)
 [![Sponsor](https://img.shields.io/badge/Support%20Me-%F0%9F%92%97-ff69b4.svg)](https://www.patreon.com/DamonKwok)
-<!-- [![MELPA](http://melpa.org/packages/verona-mode-badge.svg)](http://melpa.org/#/verona-mode) -->
+[![MELPA](http://melpa.org/packages/verona-mode-badge.svg)](http://melpa.org/#/verona-mode)
 <!-- [![MELPA Stable](http://stable.melpa.org/packages/verona-mode-badge.svg)](http://stable.melpa.org/#/verona-mode) -->
 
 # Verona Mode
@@ -13,7 +13,7 @@ An Emacs major mode for the [Verona](https://github.com/microsoft/verona/) progr
 
 ## Features
 
-- [X] Syntax highlighting (font-lock)
+- [x] Syntax highlighting (font-lock)
 - [ ] Indentation
 - [x] Workspace support
 - [ ] Auto format on save
@@ -30,7 +30,7 @@ An Emacs major mode for the [Verona](https://github.com/microsoft/verona/) progr
 
 ## Installation
 
-### ~~Using MELPA~~ ([COMING SOON](https://github.com/melpa/melpa/pull/7034))
+### Using MELPA
 This package can be obtain from
 [MELPA](http://melpa.org/#/verona-mode) or
 [MELPA Stable](http://stable.melpa.org/#/verona-mode). The `master`
@@ -44,10 +44,7 @@ it's too simple to need any).
 
 ```elisp
 (require 'verona-mode)
-(define-key verona-mode-map (kbd "M-z") verona-menu)
 (define-key verona-mode-map (kbd "<f6>")  verona-menu)
-
-(with-eval-after-load 'company (company-ctags-auto-setup))
 ```
 
 ### Using [use-package](https://github.com/jwiegley/use-package) and [straight.el](https://github.com/raxod502/straight.el)
@@ -61,9 +58,6 @@ it's too simple to need any).
              :files ("tokens" "verona-mode.el"))
   :config
   :bind-keymap
-  ("M-z" . verona-menu)
   ("<f6>" . verona-menu)
   :mode ("\\.verona\\'" . verona-mode))
-
-(with-eval-after-load 'company (company-ctags-auto-setup))
 ```
